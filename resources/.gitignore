@@ -3,5 +3,7 @@
 !frontline/*
 !tacbf/
 !tacbf/*
+!theseus/
+!theseus/*
 
 *.pyc

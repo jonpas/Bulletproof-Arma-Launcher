@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 launcher_name = 'Theseus Launcher'
 default_mods_dir = 'tac_core'
-icon = 'icons/fl.ico'
+icon = 'icons/tac.ico'
 original_url = 'http://arma.theseus-aegis.com/repos/TheseusLauncher.exe'
 executable_name = 'Theseus_Launcher'
 forum_url = 'http://forum.frontline.frl/'

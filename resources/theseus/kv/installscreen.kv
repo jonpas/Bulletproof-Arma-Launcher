@@ -163,43 +163,57 @@
         x: 0
         y: progress_bar.top + 10
         width: 256
+        row_default_height: 32
         height: self.minimum_height
 
         spacing: 4
 
-        # MakeTorrentButton
-        HoverButtonLeft:
-            disabled: True
-            background_color: 0, 0, 0, 0
-            size_hint_x: 1
-            id: make_torrent
-            on_release: root.controller.on_make_torrent_button_release(self)
+        BoxLayout:
+            orientation: 'horizontal'
 
-        # DonateButton
-        HoverButtonLeft:
-            size_hint_x: 1
-            text: 'DONATE'
-            on_release: app.open_hyperlink(launcher_config.donate_url)
+            # MakeTorrentButton
+            HoverButtonLeft:
+                disabled: True
+                background_color: 0, 0, 0, 0
+                size_hint_x: 1
+                id: make_torrent
+                on_release: root.controller.on_make_torrent_button_release(self)
 
-        # ForumButton
-        HoverButtonLeft:
-            text: 'FORUM'
-            size_hint_x: 1
-            on_release: app.open_hyperlink(launcher_config.forum_url)
+        BoxLayout:
+            orientation: 'horizontal'
 
-        # ForumButton
-        HoverButtonLeft:
-            text: 'DISCORD'
-            size_hint_x: 1
-            on_release: app.open_hyperlink(launcher_config.discord_url)
+            # WebsiteButton
+            HoverButtonLeft:
+                text: 'WEBSITE'
+                size_hint_x: 1
+                on_release: app.open_hyperlink(launcher_config.website_url)
 
-        # OptionsButton
-        HoverButtonLeft:
-            id: options_button
-            size_hint_x: 1
-            on_release: app.root.ids.main_screen_manager.current = 'pref_screen'
-            text: 'OPTIONS'
-            disabled: False
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 5
+
+            # SlackButton
+            HoverButtonLeft:
+                text: 'SLACK'
+                size_hint_x: 1.5
+                on_release: app.open_hyperlink(launcher_config.slack_url)
+
+            # SlackJoinButton
+            HoverButtonLeft:
+                text: 'JOIN'
+                size_hint_x: 1
+                on_release: app.open_hyperlink(launcher_config.slack_join_url)
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            # OptionsButton
+            HoverButtonLeft:
+                id: options_button
+                size_hint_x: 1
+                on_release: app.root.ids.main_screen_manager.current = 'pref_screen'
+                text: 'OPTIONS'
+                disabled: False
 
     # Install/Play button
     DynamicButton:

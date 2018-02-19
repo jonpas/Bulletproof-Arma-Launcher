@@ -432,11 +432,18 @@ class Controller(object):
     def action_button_init(self):
         """Set all the callbacks for the dynamic action button."""
 
+        # This is a workaround because many people thought that INSTALL meant installing from scratch
+        # So we only show INSTALL during the first install. Then we show UPDATE
+        if self.settings.get('launcher_moddir') and os.path.exists(self.settings.get('launcher_moddir')):
+            install_text = 'UPDATE'
+        else:
+            install_text = 'INSTALL'
+
         button_states = [
             (DynamicButtonStates.play, 'PLAY', self.on_play_button_release),
             (DynamicButtonStates.checking, 'CHECKING...', None),
-            (DynamicButtonStates.install, 'INSTALL', self.on_install_button_click),
-            (DynamicButtonStates.self_upgrade, 'UPDATE', self.on_self_upgrade_button_release)
+            (DynamicButtonStates.install, install_text, self.on_install_button_click),
+            (DynamicButtonStates.self_upgrade, 'UPGRADE', self.on_self_upgrade_button_release)
         ]
 
         # Bind text and callbacks for button states
@@ -785,7 +792,7 @@ class Controller(object):
 
     def on_checkmods_resolve(self, progress):
         self.para = None
-        Logger.debug('InstallScreen: checking mods finished')
+        Logger.debug('InstallScreen: Ready to play. Checking mods finished')
         self.view.ids.status_image.hide()
         self._set_status_label(progress.get('msg'))
         self.view.ids.options_button.disabled = False
@@ -907,7 +914,11 @@ class Controller(object):
     def on_sync_progress(self, progress, percentage):
         # Logger.debug('InstallScreen: syncing in progress')
 
-        self.view.ids.status_image.show()
+        # Hide the status indicator when we are seeding because that was somehow confusing people :(
+        if percentage != 1:
+            self.view.ids.status_image.show()
+        else:
+            self.view.ids.status_image.hide()
         self._set_status_label(progress.get('msg'), progress.get('mods'))
 
         # By request: show an empty progress bar if seeding (progress == 100%)

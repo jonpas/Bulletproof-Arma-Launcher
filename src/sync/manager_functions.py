@@ -201,6 +201,10 @@ def parse_teamspeak_data(para, data):
 
     return teamspeak
 
+def parse_battleye_data(para, data):
+    battleye = data.get('battleye')
+
+    return battleye
 
 def parse_servers_data(para, data, launcher_moddir):
     servers = []
@@ -223,6 +227,7 @@ def parse_servers_data(para, data, launcher_moddir):
             server.add_mods(parse_mods_data(para, server_entry, launcher_moddir))
 
         server.teamspeak = parse_teamspeak_data(para, server_entry)
+        server.battleye = parse_battleye_data(para, server_entry)
 
         servers.append(server)
 
@@ -235,6 +240,7 @@ def _prepare_and_check(messagequeue, launcher_moddir, launcher_basedir,
     mods_list = parse_mods_data(messagequeue, mod_descriptions_data, launcher_moddir)
     servers_list = parse_servers_data(messagequeue, mod_descriptions_data, launcher_moddir)
     teamspeak = parse_teamspeak_data(messagequeue, mod_descriptions_data)
+    battleye = parse_battleye_data(messagequeue, mod_descriptions_data)
 
     # Set the selection flag near for all the mods that have been selected
     # by the user
@@ -269,11 +275,12 @@ def _prepare_and_check(messagequeue, launcher_moddir, launcher_basedir,
     for mod in mods_list:
         mod.is_complete()
 
-    messagequeue.resolve({'msg': 'Checking mods finished',
+    messagequeue.resolve({'msg': 'Ready to play. Checking mods finished',
                           'mods': mods_list,
                           'launcher': launcher,
                           'servers': servers_list,
                           'teamspeak': teamspeak,
+                          'battleye': battleye,
                           })
 
 
@@ -450,7 +457,7 @@ def _sync_all(message_queue, mods, max_download_speed, max_upload_speed, seed):
         # If termination has been forced, issue a resolve so no error is raised.
         # If not sync_ok, a reject has already been issued
         if syncer.force_termination:
-            message_queue.resolve({'msg': 'Syncing stopped.'})
+            message_queue.resolve({'msg': 'Ready to play. Syncing finished.'})
             return
 
     # Perform post-download hooks for updated mods

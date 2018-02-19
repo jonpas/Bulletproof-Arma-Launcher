@@ -20,6 +20,7 @@ import os
 import teamspeak
 import textwrap
 import utils.system_processes
+import shlex
 
 from kivy.logger import Logger
 from third_party import steam
@@ -330,6 +331,12 @@ def create_game_parameters():
 
     if settings.get('arma_exThreads') and settings.get('arma_exThreads_enabled'):
         args.append('-exThreads=' + settings.get('arma_exThreads'))
+
+    if settings.get('arma_hugePages'):
+        args.append('-hugepages')
+
+    if settings.get('arma_additionalParameters'):
+        args.extend(shlex.split(settings.get('arma_additionalParameters')))
 
     return args
 

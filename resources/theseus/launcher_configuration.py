@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 launcher_name = 'Theseus Launcher'
 default_mods_dir = 'tac_core'
 icon = 'icons/tac.ico'
-original_url = 'http://arma.theseus-aegis.com/repos/TheseusLauncher.exe'
+original_url = 'http://arma.theseus-aegis.com/repos/Theseus_Launcher.exe'
 executable_name = 'Theseus_Launcher'
 website_url = 'http://www.theseus-aegis.com/'
 slack_url = 'https://theseus-aegis.slack.com/'
